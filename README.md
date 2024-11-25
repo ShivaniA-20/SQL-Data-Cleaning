@@ -20,7 +20,7 @@ The database created is **world_layoffs**, containing the following columns:
 ## Cleaning Steps
 The following steps were undertaken to clean the dataset:
 
-## 1. Preserve Raw Data 
+### 1. Preserve Raw Data 
 * To ensure the original data remains intact, a staging table was created:
 
 *CREATE TABLE world_layoffs.layoffs_staging  
@@ -32,7 +32,7 @@ LIKE world_layoffs.layoffs;*
   *INSERT INTO layoffs_staging  
    SELECT * FROM layoffs;*
 
-## 2. Remove Duplicates
+### 2. Remove Duplicates
 
 Duplicates were identified and removed using a **PARTITION BY** clause and a new column __row_num__  
 
@@ -46,11 +46,11 @@ Duplicates were identified and removed using a **PARTITION BY** clause and a new
    <img width="352" alt="image" src="https://github.com/user-attachments/assets/82e545f5-9fbd-4b31-80c1-9742d69172dd">
 
 
-* Filtered and removed rows where row_num > 1
+* Filtered and removed rows where __row_num > 1__:
 
   *DELETE FROM layoffs_staging2 WHERE row_num > 1;*
 
-## 3. Standardize Data
+### 3. Standardize Data
 
  Data was standardized to ensure consistency:
 
@@ -60,7 +60,7 @@ Duplicates were identified and removed using a **PARTITION BY** clause and a new
    *ALTER TABLE layoffs_staging2  
     ALTER COLUMN date TYPE DATE USING TO_DATE(date, 'YYYY-MM-DD');*
 
-## 4. Handle Null or Blank Values  
+### 4. Handle Null or Blank Values  
 
 Null or blank values in key columns (industry, total_laid_off, percentage_laid_off) were addressed:
 
@@ -68,7 +68,7 @@ Null or blank values in key columns (industry, total_laid_off, percentage_laid_o
 * Left total_laid_off and percentage_laid_off unchanged due to insufficient data.
 
 
-## 5. Remove Unnecessary Columns and Rows
+### 5. Remove Unnecessary Columns and Rows
 
 Rows where both total_laid_off and percentage_laid_off were null were deleted  
    
@@ -76,11 +76,14 @@ Rows where both total_laid_off and percentage_laid_off were null were deleted
     WHERE total_laid_off IS NULL AND percentage_laid_off IS NULL;*  
 
 
-## Key SQL Concepts Used:
-* CTEs (Common Table Expressions)
-* PARTITION BY for grouping duplicate records.
-* Data Type Conversion for columns like date.
-* Data Normalization through trimming and standardizing.
-* Preserving raw data integrity through staging tables.
+## Key SQL Concepts Used
+* **CTEs (Common Table Expressions)**
+* **PARTITION BY** for grouping duplicate records.
+* **ata Type Conversion** for columns like date.
+* **Data Normalization** through trimming and standardizing.
+* Preserving raw data integrity through **staging tables**.
 
+
+## Outcome  
+The cleaned dataset is now free from duplicates, standardized, and rid of unnecessary or incomplete rows. It is ready for further analysis, ensuring accurate and reliable insights.
 
