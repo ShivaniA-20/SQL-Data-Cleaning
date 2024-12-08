@@ -79,7 +79,7 @@ Rows where both total_laid_off and percentage_laid_off were null were deleted
 ## Key SQL Concepts Used
 * **CTEs (Common Table Expressions)**
 * **PARTITION BY** for grouping duplicate records.
-* **ata Type Conversion** for columns like date.
+* **Type Conversion** for columns like date.
 * **Data Normalization** through trimming and standardizing.
 * Preserving raw data integrity through **staging tables**.
 
